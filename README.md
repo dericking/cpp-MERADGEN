@@ -16,5 +16,3 @@ MERADGEN Fortran code
 MERADGEN C++ code conversion 
 
 Details will be added here as code later compiled, tested and compared against Fortran output to ensure proper return of MERADGEN results.
-
-
