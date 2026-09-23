@@ -1,0 +1,58 @@
+---
+description: Append-only WORK_NOTES_DEVELOPMENT.md; the agent never rewrites it and never adds without approval; user will delete and tidy as needed
+alwaysApply: true
+---
+
+# WORK_NOTES_DEVELOPMENT.md is append-only
+
+`WORK_NOTES_DEVELOPMENT.md` at the repo root is a running laboratory notebook:
+discoveries, failed hypotheses, compiler/math quirks, and how they were
+handled. It is not a status board (`WORK_NOTES_STATUS.md` is) and not a
+design spec.
+
+A collaborator, a thesis chapter, or a tech note should be able to reconstruct
+*why* a number looks the way it does from this file.
+
+## What belongs here
+
+- Precision discoveries (float vs double, `atan2` width, `sngl` casts).
+- Compiler / libm differences that produce plausibly-different physics
+  (`std::pow` vs Fortran `**`, FMA, optimisation level).
+- How a tiny upstream ULP difference became a visible output mismatch
+  (rounding-boundary amplifiers, CDF interpolation, iterative accumulation).
+- Small worked examples that demonstrate the mechanism, not just name it.
+- Upstream oddities found in the FORTRAN (identically-zero terms, inconsistent
+  masses) and the decision to reproduce them.
+
+## Agent behaviour (hard)
+
+1. **Never rewrite, reorder, summarise-in-place, or delete existing entries.**
+   The user trims the file later. The agent only appends.
+2. **Never add an entry without explicit approval in the current turn.**
+   Propose the text in chat first. Wait for "yes" / "add it" / equivalent.
+   The user may also supply or edit the wording.
+3. **Do not "fix" grammar, dates, or technical wording in old entries**, even
+   if they are wrong. If a later finding supersedes an earlier one, append a
+   new dated entry that says so and points at the old one.
+4. **Do not dump WORK_NOTES_STATUS.md into this file.** Live open-issue lists
+   go in `WORK_NOTES_STATUS.md`. This file is the narrative of how they were
+   found.
+
+## Entry format
+
+Append at the bottom:
+
+```
+## YYYY-MM-DD — short title
+
+Context (what was being compared / which event / which compiler flags).
+
+Discovery, with numbers.
+
+Optional small example if the mechanism is a compiler or rounding effect.
+
+Decision taken (or "undecided").
+```
+
+One discovery per entry. Keep examples short: a few lines of Fortran vs C++
+and the two resulting doubles is enough.

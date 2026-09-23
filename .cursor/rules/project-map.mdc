@@ -1,0 +1,44 @@
+---
+description: Orientation for the MERADGEN FORTRAN-to-C++ port workspace
+alwaysApply: true
+---
+
+# MERADGEN workspace
+
+A C++ port of MERADGEN, a FORTRAN 77 Møller-scattering radiative-correction
+event generator. The downstream consumer is the Geant4 application MolPol.
+
+## Layout
+
+| Path | Role |
+|---|---|
+| `meradgen-fortran/` | Verified-pristine upstream FORTRAN. The reference. |
+| `meradgen10.tar` | Original upstream tarball the reference was extracted from. |
+| `meradgen-cpp/` | Parity C++. FORTRAN literals, float `atan2`, `sngl`. |
+| `meradgen-cpp-final/` | Production library for MolPol/Geant4. |
+| `comparison-autoreport/` | Parameterized memo + parity `harness/`. |
+| `tests/` | Formal tests of production C++. Not started. |
+| `MolPolMeradgenOLD/` | Prior glue. Local-only (gitignored). |
+| `WORK_NOTES_STATUS.md` | Live open issues and which tree is authoritative. |
+| `WORK_NOTES_DEVELOPMENT.md` | Append-only notebook of discoveries. |
+| `WORK_NOTES_PARITY.md` | Checklist for matching FORTRAN. |
+| `WORK_NOTES_TODO.md` | Production punch list. |
+| `WORK_NOTES_MERADGEN_TYPOS.md` | Upstream typos fixed only in production. |
+
+## The governing invariant
+
+The C++ port exists to **reproduce** the FORTRAN, not to improve on it.
+Cleaner algebra and better constants are never incidental — each is a
+deliberate, recorded decision. Upstream oddities stay in the parity tree
+unless a decision says otherwise.
+
+## Before proposing numerical changes
+
+Read `WORK_NOTES_STATUS.md`. Do not rewrite `WORK_NOTES_DEVELOPMENT.md`;
+propose new entries and wait for approval.
+
+## Removed trees
+
+`validation_checks/`, `quick-check/`, and `validation_checks_new/` (campaign
+archive) were removed. Parity drivers live under
+`comparison-autoreport/harness/`. `MolPolMeradgenOLD/` is gitignored.

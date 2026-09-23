@@ -1,0 +1,47 @@
+---
+description: The FORTRAN reference is read-only and must stay byte-identical to upstream
+globs: meradgen-fortran/**
+alwaysApply: false
+---
+
+# The FORTRAN reference is read-only
+
+`meradgen-fortran/` is an unmodified extraction of the upstream
+`meradgen10.tar`. It has been verified byte-identical to that tarball. Its
+value is entirely in being untouched: it is the definition of correct output
+for the whole project.
+
+## Never
+
+- Edit any file under `meradgen-fortran/`, including comments and whitespace.
+- Add `print`, `write`, or debug output to produce a trace.
+- Apply a bug fix here, even an obviously correct one.
+- Reformat, modernise, or convert to free-form.
+
+## Instead
+
+To instrument the reference, copy it — never edit `meradgen-fortran/`:
+
+```bash
+python3 comparison-autoreport/harness/inject_rand4.py \
+  --src meradgen-fortran \
+  --dst /tmp/meradgen-fortran-rand4
+```
+
+The parity CMake does this into the build tree automatically. A throwaway
+inject into `/tmp` is fine for one-off patches.
+
+If a genuine upstream bug is found, record it in `WORK_NOTES_STATUS.md` /
+`WORK_NOTES_MERADGEN_TYPOS.md` with the file and line. Do not fix it in
+the reference — the parity tree must reproduce it until a decision says
+otherwise. Production may correct selected typos.
+
+## Verifying integrity
+
+```bash
+mkdir -p /tmp/mg && tar -xf meradgen10.tar -C /tmp/mg
+diff -r --exclude=meradgen10.tar /tmp/mg meradgen-fortran
+```
+
+This must report no differences. If it does not, the reference has been
+corrupted and should be restored from the tarball before any comparison work.

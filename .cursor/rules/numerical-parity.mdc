@@ -1,0 +1,58 @@
+---
+description: Floating-point rules for parity C++ vs gfortran — developed together by trial and error while hunting stream mismatches (aj27/aj31 pow trees, association, float-width casts)
+globs: meradgen-cpp/**/*.cpp,meradgen-cpp/**/*.hpp
+alwaysApply: false
+---
+
+# Numerical parity with gfortran
+
+Applies only to `meradgen-cpp/` (the parity tree). Production
+(`meradgen-cpp-final/`) may diverge by recorded decision.
+
+Every expression in this port has a FORTRAN original. Floating-point addition
+and multiplication are not associative, so an algebraically identical rewrite
+is a different number. Match the original's evaluation order.
+
+## Integer powers: never use std::pow
+
+`gfortran` expands integer exponents into multiply trees. GCC only folds
+`pow(x,2)`; exponents 3, 4 and 5 stay `libm` calls that round differently.
+This is the confirmed root cause of the `aj27` and `aj31` divergences.
+
+Replicate the exact tree gfortran emits:
+
+```cpp
+// x**2                     // x**3
+const double x2 = x * x;    const double x3 = (x * x) * x;
+
+// x**4                     // x**5
+const double t  = x * x;    const double t2 = x * x;
+const double x4 = t * t;    const double t3 = x * t2;
+                            const double x5 = t3 * t2;
+```
+
+Fractional exponents (`x**1.5`, `x**2.5`) are fine as `std::pow` — gfortran
+calls `libm` for those too.
+
+## Preserve association order
+
+```cpp
+// Fortran: 2d0*alfa**3
+const double a3 = (alfa * alfa) * alfa;   // GOOD: 2.0 * a3
+const double bad = 2.0 * alfa * alfa * alfa;  // BAD: ((2*alfa)*alfa)*alfa
+```
+
+Likewise `y / (d*d)` is not `y / d / d`, and `a*b + c` must not become an FMA.
+
+## No defensive guards
+
+Do not add `std::max(x, 0.0)`, epsilon clamps, or NaN fallbacks that the
+FORTRAN lacks. They convert a visible failure into a silently wrong number and
+they break parity. If a guard is genuinely required, record it in
+`WORK_NOTES_STATUS.md`.
+
+## Float-width traps
+
+Fortran `real` is 32-bit. `t = dble(vpgen(4)**2 - ...)` evaluates the whole
+expression in float, then widens. Keep the operands `float` so C++ does the
+same, and comment why.
