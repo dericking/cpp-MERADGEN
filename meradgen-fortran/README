@@ -1,0 +1,30 @@
+MERADGEN 1.0: Monte Carlo generator for simulation of radiative
+events in parity conserving doubly-polarized Moller scattering
+
+Authors I. Afanasev, E. Chudakov, A. Ilyichev and V. Zykunov
+
+Version 23/05/2006
+
+
+run.f      -- the sample of generation
+test.f     -- the tests v, t1 and z simulation
+meradgen.f -- main program
+fsir.f     -- the cross section of real photon emission calculation
+rnd.dat    -- random number
+
+For simulation of radiative events run
+
+make
+
+and
+
+./meradgen.exe
+
+For test simulation in test.f choose the interested value for itest
+(see test.f for detail) run
+
+make test
+
+and
+
+./test.exe
