@@ -10,7 +10,7 @@
 MolPolMeradgenOLD/
 
 # Cursor agent rules (local). Drop this line to ship them on the remote.
-.cursor/
+#.cursor/  #rules are ready.
 
 # ---------------------------------------------------------------------------
 # CMake / Make build trees (anywhere)
