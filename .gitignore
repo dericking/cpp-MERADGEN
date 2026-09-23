@@ -1,35 +1,151 @@
-# Directories
-cpptest/
+# ============================================================================
+# MERADGEN-CPP workspace ignore rules
+#
+# Tracked: FORTRAN reference, C++ trees, CMake sources, comparison-autoreport
+# scripts + harness fixtures, Markdown notes, root technote_*.pdf.
+# Not tracked: builds, scratch dumps, plots, MolPolMeradgenOLD, Cursor rules.
+# ============================================================================
 
-# Prerequisites
-*.d
+# Prior FORTRAN↔MolPol glue. Local-only.
+MolPolMeradgenOLD/
 
-# Compiled Object files
-*.slo
-*.lo
+# Cursor agent rules (local). Drop this line to ship them on the remote.
+.cursor/
+
+# ---------------------------------------------------------------------------
+# CMake / Make build trees (anywhere)
+# ---------------------------------------------------------------------------
+build/
+build_*/
+**/build/
+cmake-build-*/
+CMakeFiles/
+**/CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+Testing/
+meradgen_cpp_subbuild/
+**/meradgen_cpp_subbuild/
+
+# Ad-hoc parity-vs-final compare trees (see meradgen-cpp-final/_cmp/)
+_cmp/
+**/_cmp/
+
+# ---------------------------------------------------------------------------
+# Compiled objects, libraries, modules
+# ---------------------------------------------------------------------------
 *.o
+*.o.d
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
+*.a
 *.so
+*.so.*
 *.dylib
 *.dll
-
-# Fortran module files
+*.exe
 *.mod
 *.smod
+a.out
+core
+*.bin
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# ---------------------------------------------------------------------------
+# Generator / driver executables (no extension; CMake target names)
+# ---------------------------------------------------------------------------
+meradgen_run
+meradgen_quads
+meradgen_fortran_ref
+meradgen_fortran_run
+meradgen_fortran_check
+meradgen_parity_fortran
+meradgen_parity_cpp
+meradgen_replay_stream
+meradgen_single_txt
 
-# Executables
-*.exe
+# ---------------------------------------------------------------------------
+# Comparison / harness scratch (scripts stay tracked)
+# ---------------------------------------------------------------------------
+comparison-autoreport/_scratch/
+comparison-autoreport/**/_scratch/
+
+# ---------------------------------------------------------------------------
+# Regenerated dumps, plots, tables, streams
+# ---------------------------------------------------------------------------
+*.txt
+*.txt_old
+*.txt_brokenDown
+*.tsv
+*.json
+*.csv
+*.png
+*.pdf
+*.log
 *.out
-*.app
+*.meta
+quads.txt
+quads_*.txt
+randoms*.dat
+rnd.dat
+
+# LaTeX intermediates from write_report.py / latexmk
+*.tex
+*.aux
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+
+# ---------------------------------------------------------------------------
+# Re-include tracked inputs swallowed by the patterns above
+# ---------------------------------------------------------------------------
+!CMakeLists.txt
+!**/CMakeLists.txt
+!.gitignore
+!**/.gitignore
+!requirements.txt
+!**/requirements.txt
+!**/README.md
+!**/README
+
+# Upstream FORTRAN inputs (not artifacts)
+!meradgen-fortran/rnd.dat
+!meradgen-fortran/Makefile
+
+# Smoke / probe fixtures under the parity harness (*.txt would drop these)
+!comparison-autoreport/harness/fixtures/
+!comparison-autoreport/harness/fixtures/**
+
+# Fixture manifests are Markdown; keep them explicit
+!comparison-autoreport/harness/fixtures/*.md
+
+# Citable technotes at the repo root only (not regenerated memos)
+!/technote_*.pdf
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# Editor and OS noise
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
