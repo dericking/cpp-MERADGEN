@@ -20,7 +20,7 @@ namespace meradgen {
     const double m2     = m * m;                    // electron mass squared [source PDG, derived]
     // const double m2  = 0.261112e-6;              // [source MERADGEN Fortran; not equal to m*m]
 
-    const double barn   = 0.38937966e6;             // (hbar*c)^2 (GeV^2 ub) [source PDG]
+    const double barn   = 0.3893793721e6;             // (hbar*c)^2 (GeV^2 ub) [source PDG]
     // const double barn = 0.389379e6;              // [source MERADGEN Fortran]
 
     // Muon/tau: PDG 2024/25. Live in vacpol am2 = {m2, mu2, tau2}.
