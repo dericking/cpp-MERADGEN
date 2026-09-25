@@ -7,7 +7,7 @@ kinematics, reweight to \(P=\pm1\)).
 
 User decisions and findings: [`NOTES.md`](NOTES.md).
 Scientific contract: [`METHOD.md`](METHOD.md). Design context:
-`MolPolMeradgenNEW/PLAN.md`.
+`MolPolSandbox/NOTES.md` / `MolPolSandbox/MERADGEN_INTEGRATION.md`.
 
 | Tool | Role |
 |---|---|
