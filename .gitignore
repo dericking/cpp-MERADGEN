@@ -9,6 +9,11 @@
 # Prior FORTRAN↔MolPol glue. Local-only.
 MolPolMeradgenOLD/
 
+# MolPolSandbox: track sources on MERADGEN-CPP-MOLPOL-DEV; ignore local IDE
+# and ROOT outputs (**/build/ already covers MolPolSandbox/build/).
+MolPolSandbox/.cursor/
+MolPolSandbox/**/*.root
+
 # Cursor agent rules (local). Drop this line to ship them on the remote.
 #.cursor/  #rules are ready.
 
@@ -69,6 +74,9 @@ meradgen_single_txt
 # ---------------------------------------------------------------------------
 comparison-autoreport/_scratch/
 comparison-autoreport/**/_scratch/
+
+# kinematics_examination dumps (P+/P0/P− same-quad compares)
+kinematics_examination/out/
 
 # ---------------------------------------------------------------------------
 # Regenerated dumps, plots, tables, streams
@@ -149,3 +157,4 @@ Thumbs.db
 *~
 .vscode/
 .idea/
+_tmp/

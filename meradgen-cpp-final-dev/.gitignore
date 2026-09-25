@@ -1,0 +1,16 @@
+# CMake out-of-source build artifacts
+build/
+_cmp/
+
+# Common C/C++ build outputs
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Runtime/generated files
+rnd.dat
+*.log

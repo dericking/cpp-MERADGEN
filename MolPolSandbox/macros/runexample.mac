@@ -1,0 +1,58 @@
+/run/initialize
+
+#GENERATOR: moller | beam | LUND  (RC model is separate — /MolPol/RCtype)
+/MolPol/gen               moller
+/MolPol/filename          results_meradgen_sandbox.root
+
+#GENERATOR EFFECTS
+/MolPol/calculateLevchuk  false
+/MolPol/targetPolPct      0.08012
+# RCtype: 0=none  1=Alexander/structure-function  2=MERADGEN Approach A
+/MolPol/RCtype            2
+/MolPol/remollMS          false
+/MolPol/seed              5674661
+
+#STEPPING ACTION OPTIONS
+/MolPol/Step/krypteffect  true 
+/MolPol/Step/onlymollers  true
+
+#GENERATED PHASE SPACE
+/MolPol/thcommin          89.999999999999  deg
+/MolPol/thcommax          90.000000000001  deg
+/MolPol/phimin           -0.000000000001   deg
+/MolPol/phimax            0.000000000001   deg
+
+#BEAM INFORMATION: TARGET LADDER AT 67.4 mm - YCORRECTOR CENTER AT -251.0 mm
+/MolPol/fx                0.0      mm
+/MolPol/fy                0.0      mm
+/MolPol/fz                67.4     mm
+/MolPol/xsmear            0.0      mm
+/MolPol/ysmear            0.0      mm
+/MolPol/beamRotZX         0.0     rad
+/MolPol/beamRotZY         0.0     rad
+/MolPol/beamE             2.2     GeV
+
+#EVENT MACROS
+/MolPol/Event/recordOnlyEventsWithHits false
+
+#GEOMETRY MODIFIABLES
+/MolPol/Geo/jawWidth           3.6   cm
+/MolPol/Geo/targetPosition     67.4  mm
+/MolPol/Geo/targetThickness    0.01  mm
+/MolPol/Geo/activateFluxTrackingVPs            true
+/MolPol/Geo/activateInternalDipoleVPs  false
+/MolPol/Geo/activatePaddleVPs  false
+
+#FIELD INFORMATION
+/field/MagSourceMode      1
+/field/setQ1T             0.28
+/field/setQ2T             0.05
+/field/setQ3T             0.
+/field/setQ4T             0.10
+/field/setQ5T             0.335
+/field/setQ6T             4.0
+
+#FIELD UPDATE COMMAND MUST BE MADE AFTER FIELD DEFINITIONS
+/field/update
+/gun/particle             e-
+/run/beamOn               500
